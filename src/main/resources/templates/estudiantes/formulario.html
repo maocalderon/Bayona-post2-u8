@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${titulo} + ' - Estudiantes'">Formulario</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; background: #f4f6f8; }
+    h1 { color: #065A82; }
+    form { background:white; padding:1.5rem; border-radius:8px; max-width:500px;
+           box-shadow:0 2px 8px rgba(0,0,0,.1); }
+    div { margin-bottom: 1rem; }
+    label { display:block; font-weight:bold; margin-bottom:4px; }
+    input { width:100%; padding:8px; box-sizing:border-box; border:1px solid #ccc; border-radius:4px; }
+    .error { color:#C62828; font-size:.875rem; margin-top:4px; }
+    .btn-save { padding:8px 16px; background:#065A82; color:white; border:none;
+                border-radius:4px; cursor:pointer; }
+    .btn-cancel { padding:8px 16px; background:#808080; color:white;
+                  text-decoration:none; border-radius:4px; margin-left:.5rem; }
+  </style>
+</head>
+<body>
+  <h1 th:text="${titulo}">Formulario</h1>
+  <form th:action="@{/estudiantes/guardar}" th:object="${estudiante}" method="post">
+    <input type="hidden" th:field="*{id}">
+
+    <div>
+      <label for="nombre">Nombre</label>
+      <input type="text" th:field="*{nombre}" id="nombre">
+      <span class="error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+    </div>
+    <div>
+      <label for="apellido">Apellido</label>
+      <input type="text" th:field="*{apellido}" id="apellido">
+      <span class="error" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></span>
+    </div>
+    <div>
+      <label for="correo">Correo</label>
+      <input type="email" th:field="*{correo}" id="correo">
+      <span class="error" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}"></span>
+    </div>
+    <div>
+      <label for="carrera">Carrera</label>
+      <input type="text" th:field="*{carrera}" id="carrera">
+      <span class="error" th:if="${#fields.hasErrors('carrera')}" th:errors="*{carrera}"></span>
+    </div>
+
+    <button type="submit" class="btn-save" th:text="${titulo}">Guardar</button>
+    <a th:href="@{/estudiantes}" class="btn-cancel">Cancelar</a>
+  </form>
+</body>
+</html>

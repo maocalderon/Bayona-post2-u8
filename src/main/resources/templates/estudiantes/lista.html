@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Estudiantes</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; background: #f4f6f8; }
+    h1 { color: #065A82; }
+    .btn-new { display:inline-block; margin-bottom:1rem; padding:8px 16px;
+               background:#2E7D32; color:white; text-decoration:none; border-radius:4px; }
+    table { border-collapse:collapse; width:100%; background:white;
+            border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.1); }
+    th, td { border:1px solid #ddd; padding:10px 14px; text-align:left; }
+    th { background:#065A82; color:white; }
+    tr:nth-child(even) { background:#f5f5f5; }
+    .btn { padding:5px 10px; text-decoration:none; border-radius:4px; font-size:.875rem; }
+    .btn-edit { background:#1C7293; color:white; }
+    .btn-del  { background:#C62828; color:white; }
+    .empty { text-align:center; color:#888; padding:2rem; }
+  </style>
+</head>
+<body>
+  <h1>Lista de Estudiantes</h1>
+  <a th:href="@{/estudiantes/nuevo}" class="btn-new">+ Nuevo Estudiante</a>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Nombre</th><th>Apellido</th><th>Correo</th><th>Carrera</th><th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="e : ${estudiantes}">
+        <td th:text="${e.id}"></td>
+        <td th:text="${e.nombre}"></td>
+        <td th:text="${e.apellido}"></td>
+        <td th:text="${e.correo}"></td>
+        <td th:text="${e.carrera}"></td>
+        <td>
+          <a th:href="@{/estudiantes/editar/{id}(id=${e.id})}" class="btn btn-edit">Editar</a>
+          <a th:href="@{/estudiantes/eliminar/{id}(id=${e.id})}" class="btn btn-del">Eliminar</a>
+        </td>
+      </tr>
+      <tr th:if="${#lists.isEmpty(estudiantes)}">
+        <td colspan="6" class="empty">No hay estudiantes registrados.</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

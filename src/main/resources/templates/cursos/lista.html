@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Cursos</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; background: #f4f6f8; }
+    h1 { color: #065A82; }
+    nav { margin-bottom: 1.5rem; }
+    nav a { margin-right: 1rem; padding: 8px 14px; background: #065A82; color: white;
+            text-decoration: none; border-radius: 4px; }
+    nav a.green { background: #2E7D32; }
+    .card { background: white; border-radius: 8px; padding: 1.2rem; margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+    .card h2 { color: #065A82; margin: 0 0 .3rem; }
+    .badge { display:inline-block; background:#e3f2fd; color:#065A82; padding:2px 8px;
+             border-radius:12px; font-size:.8rem; margin-bottom:.8rem; }
+    .inscritos { display: flex; flex-wrap: wrap; gap: .5rem; margin:.5rem 0; }
+    .tag { background:#e8f5e9; color:#2E7D32; padding:3px 10px;
+           border-radius:12px; font-size:.85rem; }
+    .actions { margin-top:.8rem; display: flex; gap:.5rem; flex-wrap:wrap; }
+    .btn { padding:5px 12px; text-decoration:none; border-radius:4px; font-size:.875rem;
+           border:none; cursor:pointer; }
+    .btn-ins  { background:#1C7293; color:white; }
+    .btn-del  { background:#C62828; color:white; }
+    form.inline { display:inline; }
+    p.empty { color:#888; text-align:center; padding:2rem; }
+  </style>
+</head>
+<body>
+  <h1>Gestión de Cursos</h1>
+  <nav>
+    <a th:href="@{/cursos/nuevo}" class="green">+ Nuevo Curso</a>
+    <a th:href="@{/estudiantes}">Ver Estudiantes</a>
+  </nav>
+
+  <p class="empty" th:if="${#lists.isEmpty(cursos)}">No hay cursos registrados aún.</p>
+
+  <div th:each="c : ${cursos}" class="card">
+    <h2 th:text="${c.nombre}">Nombre</h2>
+    <span class="badge" th:text="${c.creditos} + ' créditos'">0 créditos</span>
+    <p><strong>Estudiantes inscritos (<span th:text="${#sets.size(c.estudiantes)}">0</span>):</strong></p>
+    <div class="inscritos">
+      <span th:each="e : ${c.estudiantes}" class="tag">
+        <span th:text="${e.nombre + ' ' + e.apellido}">Nombre</span>
+        <form class="inline" th:action="@{/cursos/{cId}/desinscribir/{eId}(cId=${c.id},eId=${e.id})}" method="post">
+          <button type="submit" style="background:none;border:none;color:#C62828;cursor:pointer;font-size:.8rem;margin-left:4px">✕</button>
+        </form>
+      </span>
+      <em th:if="${#sets.isEmpty(c.estudiantes)}" style="color:#aaa">Sin estudiantes</em>
+    </div>
+    <div class="actions">
+      <a th:href="@{/cursos/{id}/inscribir(id=${c.id})}" class="btn btn-ins">+ Inscribir Estudiante</a>
+      <a th:href="@{/cursos/eliminar/{id}(id=${c.id})}" class="btn btn-del"
+         onclick="return confirm('¿Eliminar este curso?')">Eliminar</a>
+    </div>
+  </div>
+</body>
+</html>

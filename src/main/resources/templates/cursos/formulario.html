@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Nuevo Curso</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; background: #f4f6f8; }
+    h1 { color: #065A82; }
+    form { background:white; padding:1.5rem; border-radius:8px; max-width:450px;
+           box-shadow:0 2px 8px rgba(0,0,0,.1); }
+    div { margin-bottom: 1rem; }
+    label { display:block; font-weight:bold; margin-bottom:4px; }
+    input { width:100%; padding:8px; box-sizing:border-box; border:1px solid #ccc; border-radius:4px; }
+    .error { color:#C62828; font-size:.875rem; margin-top:4px; }
+    .btn-save { padding:8px 16px; background:#065A82; color:white; border:none;
+                border-radius:4px; cursor:pointer; }
+    .btn-cancel { padding:8px 16px; background:#808080; color:white;
+                  text-decoration:none; border-radius:4px; margin-left:.5rem; }
+  </style>
+</head>
+<body>
+  <h1>Nuevo Curso</h1>
+  <form th:action="@{/cursos/guardar}" th:object="${curso}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <div>
+      <label for="nombre">Nombre del Curso</label>
+      <input type="text" th:field="*{nombre}" id="nombre">
+      <span class="error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+    </div>
+    <div>
+      <label for="creditos">Créditos</label>
+      <input type="number" th:field="*{creditos}" id="creditos" min="1" max="10">
+    </div>
+    <button type="submit" class="btn-save">Guardar Curso</button>
+    <a th:href="@{/cursos}" class="btn-cancel">Cancelar</a>
+  </form>
+</body>
+</html>
