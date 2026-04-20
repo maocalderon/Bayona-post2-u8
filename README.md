@@ -115,4 +115,4 @@ SELECT * FROM curso_estudiante; -- filas de inscripción
 
 ## Tecnologías
 
-- Spring Boot 3.2.5 · Spring Data JPA · Hibernate · MySQL 8 · Thymeleaf · Java 17
+- Spring Boot 3.2.5 · Spring Data JPA · Hibernate · MySQL 8 · Thymeleaf · Java 21
